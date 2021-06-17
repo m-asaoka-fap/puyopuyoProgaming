@@ -20,11 +20,41 @@ function initialize() {
     Player.initialize();
     // シーンを初期状態にセットする
     Score.initialize();
+
     // スコア表示の準備をする
-    mode = 'start';
+    // mode = 'start';
+    mode = '';
     // フレームを初期化する
     frame = 0;
 }
+
+//　再読み込み
+function reStart() {
+    // ページの再読み込みを実施
+    window.location.reload();
+}
+
+// ゲーム開始
+function gameStart() {
+    mode = 'start';
+    disableBtn("btn_start");
+    disableBtn("btn_restart");
+}
+
+function enableBtn(id) {
+    var btn = document.getElementById(id);
+    if (btn != null) {
+        btn.disabled = false;
+    }
+}
+
+function disableBtn(id) {
+    var btn = document.getElementById(id);
+    if (btn != null) {
+        btn.disabled = true;
+    }
+}
+
 
 function loop() {
     switch(mode) {
@@ -109,6 +139,8 @@ function loop() {
             // ばたんきゅーの準備をする
             PuyoImage.prepareBatankyu(frame);
             mode = 'batankyu';
+            // もう一回ボタンを有効にする
+            enableBtn("btn_restart");
             break;
         case 'batankyu':
             PuyoImage.batankyu(frame);
