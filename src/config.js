@@ -17,7 +17,7 @@ Config.puyoImgWidth = Config.puyoImgHeight;
 Config.stageBackgroundColor = '#ffffff'; // ステージの背景色
 Config.scoreBackgroundColor = '#24c0bb'; // スコアの背景色
 
-Config.freeFallingSpeed = 10; // 自由落下のスピード
+Config.freeFallingSpeed = 8; // 自由落下のスピード
 Config.erasePuyoCount = 4; // 何個以上揃ったら消えるか
 Config.eraseAnimationDuration = 30; // 何フレームでぷよを消すか
 
