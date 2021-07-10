@@ -21,12 +21,16 @@ class Player {
             right: false,
             left: false,
             up: false,
-            down: false
+            down: false,
+            ctrl: false
         };
         // ブラウザのキーボードの入力を取得するイベントリスナを登録する
         document.addEventListener('keydown', (e) => {
             // キーボードが押された場合
             switch(e.keyCode) {
+                case 17: // CTRLキー
+                    this.keyStatus.ctrl = true;
+                    e.preventDefault(); return false;
                 case 37: // 左向きキー
                     this.keyStatus.left = true;
                     e.preventDefault(); return false;
@@ -44,6 +48,9 @@ class Player {
         document.addEventListener('keyup', (e) => {
             // キーボードが離された場合
             switch(e.keyCode) {
+                case 17: // Ctrlキー
+                    this.keyStatus.ctrl = false;
+                    e.preventDefault(); return false;                    
                 case 37: // 左向きキー
                     this.keyStatus.left = false;
                     e.preventDefault(); return false;
@@ -92,6 +99,7 @@ class Player {
             this.keyStatus.down = false
             this.keyStatus.left = false
             this.keyStatus.right = false
+            this.keyStatus.ctrl = false
         })
 
         // ジェスチャーを判定して、keyStatusプロパティを更新する関数
@@ -107,12 +115,14 @@ class Player {
                     this.keyStatus.down = false
                     this.keyStatus.left = false
                     this.keyStatus.right = false
+                    this.keyStatus.ctrl = false
                 } else if (0 <= verticalDirection) {
                     // down
                     this.keyStatus.up = false
                     this.keyStatus.down = true
                     this.keyStatus.left = false
                     this.keyStatus.right = false
+                    this.keyStatus.ctrl = false
                 }
             } else {
                 // 横方向
@@ -122,12 +132,14 @@ class Player {
                     this.keyStatus.down = false
                     this.keyStatus.left = true
                     this.keyStatus.right = false
+                    this.keyStatus.ctrl = false
                 } else if (0 <= horizonDirection) {
                     // right
                     this.keyStatus.up = false
                     this.keyStatus.down = false
                     this.keyStatus.left = false
                     this.keyStatus.right = true
+                    this.keyStatus.ctrl = false
                 }
             }
         }
@@ -281,7 +293,7 @@ class Player {
                 this.puyoStatus.x += cx;
                 return 'moving';
             }
-        } else if(this.keyStatus.up) {
+        } else if((this.keyStatus.up) || (this.keyStatus.ctrl))  {
             // 回転を確認する
             // 回せるかどうかは後で確認。まわすぞ
             const x = this.puyoStatus.x;
@@ -290,7 +302,7 @@ class Player {
             const my = y + this.puyoStatus.dy;
             const rotation = this.puyoStatus.rotation;
             let canRotate = true;
-
+            
             let cx = 0;
             let cy = 0;
             if(rotation === 0) {
