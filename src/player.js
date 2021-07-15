@@ -246,6 +246,7 @@ class Player {
         // まず自由落下を確認する
         // 下キーが押されていた場合、それ込みで自由落下させる
         if(this.falling(this.keyStatus.down)) {
+            this.keyStatus.down = false; // キー初期化
             // 落下が終わっていたら、ぷよを固定する
             this.setPuyoPosition();
             return 'fix';
@@ -284,6 +285,10 @@ class Player {
                     }
                 }
             }
+            
+            // キー初期化
+            this.keyStatus.right = false;
+            this.keyStatus.left = false;
 
             if(canMove) {         
                 // 動かすことが出来るので、移動先情報をセットして移動状態にする       
@@ -357,6 +362,10 @@ class Player {
                     }
                 }
             }
+            
+            // キー初期化
+            this.keyStatus.up = false;
+            this.keyStatus.ctrl = false;
             
             if(canRotate) {
                 // 上に移動する必要があるときは、一気にあげてしまう
